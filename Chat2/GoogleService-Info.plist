@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>459102586733-cde9b45gd6nbucf83ta176es97i2jodm.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.459102586733-cde9b45gd6nbucf83ta176es97i2jodm</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDMy8xcyI61EtWDE2l4MbPNcUDcsZrEKTA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>459102586733</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>takuya.N4444.Chat2</string>
+	<key>PROJECT_ID</key>
+	<string>chat2-15dc9</string>
+	<key>STORAGE_BUCKET</key>
+	<string>chat2-15dc9.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:459102586733:ios:dbc9aba32775a09b1cbc64</string>
+</dict>
+</plist>

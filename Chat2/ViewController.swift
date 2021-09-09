@@ -9,104 +9,76 @@ import UIKit
 import Firebase
 
 class ViewController: UIViewController {
-
-    @IBOutlet weak var textView: UITextView!
-    @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var messageTextField: UITextField!
-
-    enum textFieldKind:Int {
-        case name = 1
-        case message = 2
-    }
-
-    var defaultstore:Firestore!
-
+    @IBOutlet weak var registerEmailTextField: UITextField!
+    @IBOutlet weak var registerPasswordTextField: UITextField!
+    @IBOutlet weak var registerNameTextField: UITextField!
+    @IBOutlet weak var loginEmailTextField: UITextField!
+    @IBOutlet weak var loginPasswordTextField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        messageTextField.delegate = self
-        nameTextField.delegate = self
-        //Firestoreへのコネクションを張る
-        defaultstore = Firestore.firestore()
-
-
-        //Firestoreからデータを取得し、TextViewに表示する
-        defaultstore.collection("chat").addSnapshotListener { (snapShot, error) in
-            guard let value = snapShot else {
-                print("snapShot is nil")
-                return
-            }
-
-            value.documentChanges.forEach{diff in
-            //更新内容が追加だったときの処理
-                if diff.type == .added {
-                    //追加データを変数に入れる
-                    let chatDataOp = diff.document.data() as? Dictionary<String, String>
-                    print(diff.document.data())
-                    guard let chatData = chatDataOp else {
-                        return
-                    }
-                    guard let message = chatData["message"] else {
-                        return
-                    }
-                    guard let name = chatData["name"] else {
-                        return
-                    }
-                    //TextViewの一番下に新しいメッセージ内容を追加する
-                    self.textView.text =  "\(self.textView.text!)\n\(name) : \(message)"
+        
+    }
+    
+    @IBAction func tapRegisterButton(_ sender: Any) {
+        if let email = registerEmailTextField.text,
+            let password = registerPasswordTextField.text,
+            let name = registerNameTextField.text {
+            // ①FirebaseAuthにemailとpasswordでアカウントを作成する
+            Auth.auth().createUser(withEmail: email, password: password, completion: { (result, error) in
+                if let user = result?.user {
+                    print("ユーザー作成完了 uid:" + user.uid)
+                    // ②FirestoreのUsersコレクションにdocumentID = ログインしたuidでnameを作成する
+                    Firestore.firestore().collection("users").document(user.uid).setData([
+                        "name": name
+                    ], completion: { error in
+                        if let error = error {
+                            // ②が失敗した場合
+                            print("Firestore 新規登録失敗 " + error.localizedDescription)
+                            let dialog = UIAlertController(title: "新規登録失敗", message: error.localizedDescription, preferredStyle: .alert)
+                            dialog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                            self.present(dialog, animated: true, completion: nil)
+                        } else {
+                            print("ユーザー作成完了 name:" + name)
+                            // ③成功した場合はTodo一覧画面に画面遷移を行う
+                            let storyboard: UIStoryboard = self.storyboard!
+                            let next = storyboard.instantiateViewController(withIdentifier: "ChatViewController")
+                            self.present(next, animated: true, completion: nil)
+                        }
+                    })
+                } else if let error = error {
+                    // ①が失敗した場合
+                    print("Firebase Auth 新規登録失敗 " + error.localizedDescription)
+                    let dialog = UIAlertController(title: "新規登録失敗", message: error.localizedDescription, preferredStyle: .alert)
+                    dialog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(dialog, animated: true, completion: nil)
                 }
-            }
+            })
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+    
+    @IBAction func tapLoginButton(_ sender: Any) {
+        if let email = loginEmailTextField.text,
+            let password = loginPasswordTextField.text {
+            Auth.auth().signIn(withEmail: email, password: password, completion: { (result, error) in
+                if let user = result?.user {
+                    // 成功した場合
+                    print("ログイン完了 uid:" + user.uid)
+                    let storyboard: UIStoryboard = self.storyboard!
+                    let next = storyboard.instantiateViewController(withIdentifier: "ChatViewController")
+                    self.present(next, animated: true, completion: nil)
+                } else if let error = error {
+                    // 失敗した場合
+                    print("ログイン失敗 " + error.localizedDescription)
+                    let dialog = UIAlertController(title: "ログイン失敗", message: error.localizedDescription, preferredStyle: .alert)
+                    dialog.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(dialog, animated: true, completion: nil)
+                }
+            })
+        }
     }
+    
 
-
-}
-
-extension ViewController:UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        print("returnが押されたよ")
-
-        //キーボードを閉じる
-        textField.resignFirstResponder()
-
-        //nameTextFieldの場合は　returnを押してもFirestoreへ行く処理をしない
-        if textField.tag == textFieldKind.name.rawValue {
-            return true
-        }
-        //nameに入力されたテキストを変数に入れる。nilの場合はFirestoreへ行く処理をしない
-        guard let name = nameTextField.text else {
-            return true
-        }
-
-        //nameが空欄の場合はFirestoreへ行く処理をしない
-        if nameTextField.text == "" {
-            return true
-        }
-
-        //messageに入力されたテキストを変数に入れる。nilの場合はFirestoreへ行く処理をしない
-        guard let message = messageTextField.text else {
-            return true
-        }
-
-        //messageが空欄の場合はFirestoreへ行く処理をしない
-        if messageTextField.text == "" {
-            return true
-        }
-
-        //入力された値を配列に入れる
-        let messageData: [String: String] = ["name":name, "message":message]
-
-        //Firestoreに送信する
-        defaultstore.collection("chat").addDocument(data: messageData)
-
-        //メッセージの中身を空にする
-        messageTextField.text = ""
-
-        return true
-    }
 }
 
 

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,6 +15,7 @@
 		F306C8AA26E9AE6100B70D1F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F306C8A926E9AE6100B70D1F /* Assets.xcassets */; };
 		F306C8AD26E9AE6100B70D1F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F306C8AB26E9AE6100B70D1F /* LaunchScreen.storyboard */; };
 		F306C8B526E9C01F00B70D1F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F306C8B426E9C01F00B70D1F /* GoogleService-Info.plist */; };
+		F306C8B726E9EC4C00B70D1F /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F306C8B626E9EC4C00B70D1F /* ChatViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		F306C8AC26E9AE6100B70D1F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F306C8AE26E9AE6100B70D1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F306C8B426E9C01F00B70D1F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F306C8B626E9EC4C00B70D1F /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,7 +60,6 @@
 				D45BF3313B2DCBF9B3CF4394 /* Pods-Chat2.debug.xcconfig */,
 				9D62A0D10232BBECD5B5B9CB /* Pods-Chat2.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -87,6 +88,7 @@
 				F306C8A226E9AE6000B70D1F /* SceneDelegate.swift */,
 				F306C8A426E9AE6000B70D1F /* ViewController.swift */,
 				F306C8A626E9AE6000B70D1F /* Main.storyboard */,
+				F306C8B626E9EC4C00B70D1F /* ChatViewController.swift */,
 				F306C8A926E9AE6100B70D1F /* Assets.xcassets */,
 				F306C8AB26E9AE6100B70D1F /* LaunchScreen.storyboard */,
 				F306C8AE26E9AE6100B70D1F /* Info.plist */,
@@ -212,6 +214,7 @@
 			files = (
 				F306C8A526E9AE6000B70D1F /* ViewController.swift in Sources */,
 				F306C8A126E9AE6000B70D1F /* AppDelegate.swift in Sources */,
+				F306C8B726E9EC4C00B70D1F /* ChatViewController.swift in Sources */,
 				F306C8A326E9AE6000B70D1F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
